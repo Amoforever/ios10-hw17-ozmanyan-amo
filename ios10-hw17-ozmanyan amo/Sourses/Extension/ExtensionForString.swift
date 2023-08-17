@@ -14,9 +14,9 @@ extension String {
     var punctuation: String { return "!\"#$%&'()*+,-./:;<=>?@[\\]^_`{|}~" }
     var letters:     String { return lowercase + uppercase }
     var printable:   String { return digits + letters + punctuation }
-
-
-
+    
+    
+    
     mutating func replace(at index: Int, with character: Character) {
         var stringArray = Array(self)
         stringArray[index] = character
@@ -24,13 +24,13 @@ extension String {
     }
     
     func generatePassword() -> String {
-            lazy var password = ""
-            let characters = String().printable.map { String($0) }
-            for _ in 0..<10 {
-                password += characters.randomElement() ?? ""
-            }
-            return password
+        lazy var password = ""
+        let characters = String().printable.map { String($0) }
+        for _ in 0..<10 {
+            password += characters.randomElement() ?? ""
         }
+        return password
+    }
     
     func components(withMaxLength length: Int) -> [String] {
         return stride(from: 0, to: self.count, by: length).map {

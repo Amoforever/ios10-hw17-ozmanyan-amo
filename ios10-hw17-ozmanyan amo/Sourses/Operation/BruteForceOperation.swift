@@ -11,7 +11,7 @@ class BruteForceOperation {
     
     func bruteForce(passwordToUnlock: String) {
         let allowedCharacters: [String] = String().printable.map { String($0) }
-
+        
         var password: String = ""
         while password != passwordToUnlock {
             password = generateBruteForce(password, fromArray: allowedCharacters)
@@ -24,10 +24,10 @@ class BruteForceOperation {
     func indexOf(character: Character, _ array: [String]) -> Int {
         return array.firstIndex(of: String(character)) ?? 2
     }
-
+    
     func characterAt(index: Int, _ array: [String]) -> Character {
         return index < array.count ? Character(array[index])
-                                   : Character("")
+        : Character("")
     }
     
     func generateBruteForce(_ string: String, fromArray array: [String]) -> String {
