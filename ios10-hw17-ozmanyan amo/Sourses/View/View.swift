@@ -11,7 +11,7 @@ import SnapKit
 class BruteForceView: UIView {
     
     // MARK: = PRroperties
-    private lazy var buttonForRandomPassword: UIButton = {
+     lazy var buttonForRandomPassword: UIButton = {
             let button = UIButton()
             button.backgroundColor = .systemBlue
             button.clipsToBounds = true
@@ -25,11 +25,10 @@ class BruteForceView: UIView {
             button.layer.shadowRadius = 10
             button.layer.shouldRasterize = true
             button.layer.rasterizationScale = UIScreen.main.scale
-            button.addTarget(self, action: #selector(generatePasswordInTextField), for: .touchUpInside)
             return button
     }()
     
-    private lazy var passwordTextField: UITextField = {
+     lazy var passwordTextField: UITextField = {
             let passwordTextField = UITextField()
             passwordTextField.textColor = .gray
             passwordTextField.textAlignment = .center
@@ -41,7 +40,7 @@ class BruteForceView: UIView {
             return passwordTextField
         }()
 
-    private lazy var buttonForChoosePassword: UIButton = {
+     lazy var buttonForChoosePassword: UIButton = {
             let button = UIButton()
             button.backgroundColor = .systemBlue
             button.clipsToBounds = true
@@ -55,11 +54,10 @@ class BruteForceView: UIView {
             button.layer.shadowRadius = 10
             button.layer.shouldRasterize = true
             button.layer.rasterizationScale = UIScreen.main.scale
-            button.addTarget(self, action: #selector(generatePasswordInLabel), for: .touchUpInside)
             return button
         }()
 
-    private lazy var labelWithPaasword: UILabel = {
+     lazy var labelWithPaasword: UILabel = {
             let label = UILabel()
             label.text = "password"
             label.textColor = .black
@@ -69,7 +67,7 @@ class BruteForceView: UIView {
             return label
         }()
 
-    private lazy var activityIndicator: UIActivityIndicatorView = {
+     lazy var activityIndicator: UIActivityIndicatorView = {
             let activityIndicator = UIActivityIndicatorView()
             activityIndicator.isHidden = true
             activityIndicator.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +75,7 @@ class BruteForceView: UIView {
         }()
 
     //MARK: - SetupHierarchy
-    private func setupHierarchy() {
+     func setupHierarchy() {
             addSubview(buttonForRandomPassword)
             addSubview(passwordTextField)
             addSubview(buttonForChoosePassword)
@@ -129,6 +127,7 @@ class BruteForceView: UIView {
     }
     
     private func setupView() {
+        
         backgroundColor = .lightGray
         setupHierarchy()
         setupLayout()
