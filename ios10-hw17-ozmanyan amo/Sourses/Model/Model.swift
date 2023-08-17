@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Status {
+enum StatusOfBruteForce {
     case start
     case progress
     case finish
