@@ -20,9 +20,9 @@ class ViewControllerOfBruteForceOperation: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view = BruteForceView()
-        
+        statusChange(for: .start)
         bruteForceView?.buttonForRandomPassword.addTarget(self, action: #selector(changePassword), for: .touchUpInside)
-        bruteForceView?.buttonForChoosePassword.addTarget(self, action: #selector(changeColorOfView), for: .touchUpInside)
+        bruteForceView?.buttonForChangeBackgroundColor.addTarget(self, action: #selector(changeColorOfView), for: .touchUpInside)
         
     }
     
@@ -41,6 +41,7 @@ class ViewControllerOfBruteForceOperation: UIViewController {
     }
     
     @objc func changePassword(_ sender: Any) {
+        statusChange(for: .progress)
         bruteForceView?.passwordTextField.text = String().generatePassword()
         let unlockPassword = bruteForceView?.passwordTextField.text?.components(withMaxLength: 3) ?? [""]
         let queue = DispatchQueue(label: "BruteForceOperation", qos: .default, attributes: .concurrent)
@@ -49,8 +50,33 @@ class ViewControllerOfBruteForceOperation: UIViewController {
                 brute.bruteForce(passwordToUnlock: character)
             }
         }
-        workItem.notify(queue: .main, execute: workItem)
+        workItem.notify(queue: .main) { [ self ] in
+            statusChange(for: .finish)
+        }
         queue.async(execute: workItem)
+    }
+    
+    func statusChange(for value: StatusOfBruteForce) {
+        switch value {
+        case .start:
+            bruteForceView?.labelWithPaasword.text = "Получение рандомного пароля"
+            bruteForceView?.buttonForRandomPassword.setTitle("random password", for: .normal)
+        case .progress:
+            bruteForceView?.labelWithPaasword.text = "Можем пока сменить цвет фона"
+            bruteForceView?.activityIndicator.isHidden = false
+            bruteForceView?.activityIndicator.startAnimating()
+            bruteForceView?.passwordTextField.isSecureTextEntry = true
+            bruteForceView?.buttonForRandomPassword.isUserInteractionEnabled = false
+        case .finish:
+            bruteForceView?.activityIndicator.isHidden = true
+            bruteForceView?.activityIndicator.stopAnimating()
+            bruteForceView?.passwordTextField.isSecureTextEntry = false
+            bruteForceView?.labelWithPaasword.text = "Пароль \(self.bruteForceView?.passwordTextField.text ?? "")"
+            bruteForceView?.buttonForRandomPassword.isSelected = false
+            bruteForceView?.activityIndicator.isHidden = true
+            bruteForceView?.buttonForRandomPassword.isUserInteractionEnabled = true
+            bruteForceView?.buttonForRandomPassword.setTitle("again", for: .normal)
+        }
     }
     
 }

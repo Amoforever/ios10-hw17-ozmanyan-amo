@@ -35,17 +35,16 @@ class BruteForceView: UIView {
             passwordTextField.placeholder = "password"
             passwordTextField.backgroundColor = .lightGray
             passwordTextField.layer.cornerRadius = 25
-            passwordTextField.isSecureTextEntry = true
             passwordTextField.translatesAutoresizingMaskIntoConstraints = false
             return passwordTextField
         }()
 
-     lazy var buttonForChoosePassword: UIButton = {
+     lazy var buttonForChangeBackgroundColor: UIButton = {
             let button = UIButton()
             button.backgroundColor = .systemBlue
             button.clipsToBounds = true
             button.layer.cornerRadius = 25
-            button.setTitle("choose password", for: .normal)
+            button.setTitle("change background color", for: .normal)
             button.setTitleColor(.white, for: .normal)
             button.translatesAutoresizingMaskIntoConstraints = false
             button.layer.shadowColor = UIColor.black.cgColor
@@ -59,10 +58,10 @@ class BruteForceView: UIView {
 
      lazy var labelWithPaasword: UILabel = {
             let label = UILabel()
-            label.text = "password"
             label.textColor = .black
-            label.font = UIFont.preferredFont(forTextStyle: .largeTitle)
+         label.font = UIFont.preferredFont(forTextStyle: .headline)
             label.translatesAutoresizingMaskIntoConstraints = false
+            label.numberOfLines = 2
             label.textAlignment = .center
             return label
         }()
@@ -78,18 +77,32 @@ class BruteForceView: UIView {
      func setupHierarchy() {
             addSubview(buttonForRandomPassword)
             addSubview(passwordTextField)
-            addSubview(buttonForChoosePassword)
+            addSubview(buttonForChangeBackgroundColor)
             addSubview(labelWithPaasword)
             addSubview(activityIndicator)
         }
     
     //MARK: - SetupLayout
     private func setupLayout() {
+        activityIndicator.snp.makeConstraints { make in
+            
+            make.top.equalToSuperview().inset(100)
+            make.centerX.equalToSuperview()
+        }
+        
+        labelWithPaasword.snp.makeConstraints { make in
+            
+            make.top.equalTo(activityIndicator).inset(70)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(250)
+            make.height.equalTo(50)
+        }
+        
         buttonForRandomPassword.snp.makeConstraints { make in
                     
-                    make.top.equalToSuperview().inset(150)
+                    make.top.equalTo(labelWithPaasword).inset(70)
                     make.centerX.equalToSuperview()
-                    make.width.equalTo(300)
+                    make.width.equalTo(250)
                     make.height.equalTo(50)
                 }
                 
@@ -97,40 +110,34 @@ class BruteForceView: UIView {
                     
                     make.top.equalTo(buttonForRandomPassword).inset(70)
                     make.centerX.equalToSuperview()
-                    make.width.equalTo(300)
+                    make.width.equalTo(250)
                     make.height.equalTo(50)
                 }
                 
-                buttonForChoosePassword.snp.makeConstraints { make in
+        buttonForChangeBackgroundColor.snp.makeConstraints { make in
                     
                     make.top.equalTo(passwordTextField).inset(70)
                     make.centerX.equalToSuperview()
-                    make.width.equalTo(300)
+                    make.width.equalTo(250)
                     make.height.equalTo(50)
                 }
                 
-                labelWithPaasword.snp.makeConstraints { make in
-                    
-                    make.top.equalTo(buttonForChoosePassword).inset(70)
-                    make.left.equalToSuperview()
-                    make.width.equalTo(240)
-                    make.height.equalTo(50)
-                }
-                
-                activityIndicator.snp.makeConstraints { make in
-                    
-                    make.left.equalTo(labelWithPaasword).inset(210)
-                    make.top.equalTo(buttonForChoosePassword).inset(60)
-                    make.width.equalTo(70)
-                    make.height.equalTo(70)
-                }
     }
     
-    private func setupView() {
-        
-        backgroundColor = .lightGray
-        setupHierarchy()
-        setupLayout()
-    }
+    init() {
+            super.init(frame: .zero)
+            commonInit()
+        }
+
+        required init?(coder: NSCoder) {
+            super.init(coder: coder)
+            commonInit()
+        }
+
+        private func commonInit() {
+            backgroundColor = .white
+            setupHierarchy()
+            setupLayout()
+        }
 
 }
